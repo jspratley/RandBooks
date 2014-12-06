@@ -4,14 +4,23 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
-
+    public String[] titles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadTitles();
+        String name = pickBookTitle();
+        TextView textView = new TextView(this);
+        textView.setTextSize(40);
+
+        textView.setText(name);
+
+
+        setContentView(textView);
     }
 
 
@@ -35,5 +44,17 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void loadTitles(){
+        titles = new String[4];
+        titles[0]="Treasure Island";
+        titles[1]="Jane Eyre";
+        titles[2]="Catch-22";
+        titles[3]="Harry Potter and the Chamber of Secrets";
+    }
+    public String pickBookTitle(){
+        int size = titles.length;
+        int i = (int)(Math.random()*size);
+        return titles[i];
     }
 }

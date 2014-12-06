@@ -1,27 +1,51 @@
 package com.example.jessica.randbooks;
-
+import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
-    public String[] titles;
+    public ArrayList<String> titles;
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        titles = new ArrayList<String>();
         loadTitles();
-        String name = pickBookTitle();
-        TextView textView = new TextView(this);
+        final TextView textView = new TextView(this);
         textView.setTextSize(40);
+        final EditText textBox = new EditText(this);
 
-        textView.setText(name);
 
+        setContentView(textBox);
 
         setContentView(textView);
+        Button addButton = (Button)this.findViewById(R.id.add);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                titles.add(textBox.getText().toString());
+            }
+        });
+        setContentView(addButton);
+        Button pickButton = (Button)this.findViewById(R.id.pick);
+        pickButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name = pickBookTitle();
+                textView.setText(name);
+                setContentView(textView);
+            }
+        });
+        setContentView(addButton);
     }
+
 
 
     @Override
@@ -46,15 +70,15 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
     public void loadTitles(){
-        titles = new String[4];
-        titles[0]="Treasure Island";
-        titles[1]="Jane Eyre";
-        titles[2]="Catch-22";
-        titles[3]="Harry Potter and the Chamber of Secrets";
+        titles.add("Treasure Island");
+        titles.add("Jane Eyre");
+        titles.add("Catch-22");
+        titles.add("Harry Potter and the Chamber of Secret");
+
     }
     public String pickBookTitle(){
-        int size = titles.length;
-        int i = (int)(Math.random()*size);
-        return titles[i];
+        int lsize = titles.size();
+        int i = (int)(Math.random()*lsize);
+        return titles.get(i);
     }
 }
